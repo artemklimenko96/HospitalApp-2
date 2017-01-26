@@ -1,0 +1,38 @@
+.root 
+{
+	-fx-border-color: darkgrey;
+	-fx-background-color: #ffa333;
+	/*-fx-border-width: 2px;*/
+	/*-fx-border-radius: 2px;*/
+	/*-fx-border-insets: 2px;*/
+	/*-fx-background-color: #00b3b3;'/
+	/*-fx-background-insets: 5px;*
+*/
+}
+
+
+/* 
+
+.grid
+{
+	-fx-border-color: black;
+	-fx-background-color: blue;
+	
+}
+
+.label
+{
+	-fx-background-color: blue;
+}
+
+.button { 
+    -fx-border-color: #e2e2e2;
+    -fx-border-width: 0;
+    -fx-background-radius: 0;
+    -fx-background-color: blue;
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 11pt;
+    -fx-text-fill: black;
+    -fx-background-insets: 0 0 0 0, 0, 1, 2;
+}
+*/

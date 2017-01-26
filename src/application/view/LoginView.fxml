@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="415.0" maxWidth="300.0" minHeight="415.0" minWidth="300.0" prefHeight="415.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.LoginController">
+   <children>
+      <GridPane layoutX="24.0" layoutY="130.0" prefHeight="88.0" prefWidth="232.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="48.0" minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="35.0" minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="Password :" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+            <Label prefHeight="17.0" prefWidth="65.0" text="Username :" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+            <TextField fx:id="username" onAction="#handleSubmitButtonAction" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="BASELINE" />
+            <PasswordField fx:id="password" onAction="#handleSubmitButtonAction" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+         </children>
+      </GridPane>
+      <Label alignment="CENTER" layoutX="117.0" layoutY="75.0" text="Login">
+         <font>
+            <Font size="27.0" />
+         </font>
+      </Label>
+      <Button fx:id="submitButton" layoutX="200.0" layoutY="236.0" mnemonicParsing="false" onAction="#handleSubmitButtonAction" text="Sign In" />
+      <Label fx:id="statuslbl" layoutX="97.0" layoutY="318.0" prefHeight="39.0" prefWidth="131.0" AnchorPane.bottomAnchor="58.0" AnchorPane.leftAnchor="97.0" AnchorPane.rightAnchor="73.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
