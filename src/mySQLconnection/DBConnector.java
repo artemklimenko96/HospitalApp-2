@@ -1,39 +1,34 @@
 package mySQLconnection;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.sql.Statement;
+
+import java.sql.*;
 
 public class DBConnector {
-	/*String url = "jdbc:mysql://localhost:3306/hospital";
-	String username = "hugo";
-	String password = "passwort";*/
+	private static String url = "jdbc:mysql://localhost:3306/hospitaldata";
+	private static String driverName = "com.mysql.jdbc.Driver";
+	private static String username = "root";
+	private static String password = "";
+	private static Connection conn;
+
 	public static Connection getConnection() throws Exception {
-		
+
 		try{
 
-			String driver = "com.mysql.jdbc.Driver";
-			String url = "jdbc:mysql://localhost:3306/HospitalData";
-			String username = "projectoop";
-			String password = "password";
-			Class.forName(driver);						
+			Class.forName(driverName);
 			Connection conn = DriverManager.getConnection(url, username, password);
-			System.out.println("Connection established!");			
+			System.out.println("Connection established!");
 			return conn;
-			
+
 		} catch(Exception e) {
 			System.out.println("Connection failed!");
 		}
-		
+
 		return null;
 	}
-	
-	
+
+
     public static ResultSet runMyQuery(Statement statement, Connection connection, String query){
-    	
+
     	ResultSet resultSet = null;
     	 try {
 			statement = connection.createStatement();  //Usage of statement makes your code prone to SQL injection attacks
@@ -43,27 +38,27 @@ public class DBConnector {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    	
-    	return resultSet;   	
+
+    	return resultSet;
     }
-  
-    
+
+
     public static void writeData(ResultSet resultSet) throws SQLException {
 
     	ResultSetMetaData rsmd = resultSet.getMetaData();
-    	
+
     	int columnsNumber = rsmd.getColumnCount();
-    	
+
     	for (int i = 1; i <= columnsNumber; i++){
-    		
+
     		System.out.print(rsmd.getColumnName(i)+",\t");
     		if(i==columnsNumber)
     		{
     			System.out.print("\r\n");
     		}
-        	
+
     	}
-    	   	
+
     	while (resultSet.next()) {
     	    for (int i = 1; i <= columnsNumber; i++) {
     	        if (i > 1) System.out.print(",  ");

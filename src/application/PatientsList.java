@@ -3,6 +3,7 @@ package application;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.ListIterator;
 
 import application.model.Patient;
@@ -32,11 +33,15 @@ public class PatientsList {
     @FXML private Label vital3lbl;
     @FXML private Label vital4lbl; 
     @FXML private AnchorPane vitalSignPane;
-    
+   public static PatientsList p = new PatientsList();
     Connection con;
   
     private ObservableList<Patient> patientData = FXCollections.observableArrayList();
-	
+
+
+
+	//array for storing the patients with initial vital signs
+	public static ArrayList<Patient> allPatients = new ArrayList<>();
 	public ObservableList<Patient> getPatientData() {
         return patientData;
     }
@@ -64,6 +69,8 @@ public class PatientsList {
 					tempPatient.setVital2(rs.getInt("vital2"));
 					tempPatient.setVital3(rs.getInt("vital3"));
 					tempPatient.setVital4(rs.getInt("vital4"));
+					//adding a patient with vital signs to the array
+					allPatients.add(tempPatient);
 				} catch (SQLException e) {
 					System.out.println("Loading Vital failed!");
 					e.printStackTrace();
@@ -131,11 +138,19 @@ public class PatientsList {
     private void initialize() {
     	refreshTable();
     	refreshVitals();
-    	System.out.println("init PatientsList");
+		System.out.println("init PatientsList");
         showPatientDetails(null);
         patientTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> showPatientDetails(newValue));
     }
-    
+	public static ArrayList<Patient> getAllPatients() {
+
+		p.initialize();
+		return allPatients;
+	}
+
+	public static void setAllPatients(ArrayList<Patient> allPatients) {
+		PatientsList.allPatients = allPatients;
+	}
     private void showPatientDetails(Patient patient) {
     	if(patient != null) {
     		firstNameLabel.setText(patient.getFirstName());

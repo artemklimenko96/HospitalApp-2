@@ -58,8 +58,11 @@ public class LoginController {
 	    import java.sql.Connection;
 	    import java.sql.PreparedStatement;
 	    import java.sql.ResultSet;
-	    import java.util.ResourceBundle;
-	    import javafx.event.ActionEvent;
+		import java.util.ArrayList;
+		import java.util.ResourceBundle;
+
+		import application.model.Patient;
+		import javafx.event.ActionEvent;
 	    import javafx.fxml.FXML;
 	    import javafx.fxml.Initializable;
 	    import javafx.scene.control.Button;
@@ -80,9 +83,9 @@ public class LoginController {
 	    	@FXML private PasswordField password;
 	    	@FXML private Button submitButton;
 		    @FXML private Label statuslbl;
-	    	
+	    	public static ArrayList<Patient> p;
 	    	@FXML protected void handleSubmitButtonAction(ActionEvent event) throws Exception {
-	    		
+
 	    		ResultSet rs = null;
 	    			
 	    		String query = "SELECT * FROM userlogin WHERE username=? and password=?";
@@ -105,8 +108,11 @@ public class LoginController {
 	    				System.out.println("User Name & Password correct");	
 	    				System.out.println("Login as class " + Main.isUserClass() +  " with ID " + Main.getUserID());
 	    				Main.setCurrentUserName(username.getText());
-	    				
-	    					
+
+						p = PatientsList.getAllPatients();
+						AlertVitalSigns alerts = new AlertVitalSigns();
+						Thread t = new Thread(alerts);
+						t.start();
 	    				main.initMainLayout();
 	    				
 	    			}

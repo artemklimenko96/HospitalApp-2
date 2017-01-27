@@ -4,9 +4,11 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 
+import application.model.Patient;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
@@ -19,7 +21,7 @@ import javafx.scene.layout.BorderPane;
 public class Main extends Application {
 	
 	static Connection con;
-	
+	PatientsList list = new PatientsList();
 	private Stage primaryStage;
 	private static Stage mainStage;
 	private static BorderPane mainLayout;
@@ -43,6 +45,7 @@ public class Main extends Application {
 			e.printStackTrace();
 		}
 		initLogin();
+
 	}
 		
 	public void initLogin() {
@@ -193,9 +196,10 @@ public class Main extends Application {
 			int second = cal.get(Calendar.SECOND);			
 			return mFormat.format(Double.valueOf(hour))+":"+mFormat.format(Double.valueOf(minute))+":"+mFormat.format(Double.valueOf(second));
 	   }
-	
+
 	public static void main(String[] args) {
 		launch(args);
+
 	}
 
 	public static Connection getCon() {
@@ -206,7 +210,7 @@ public class Main extends Application {
 		Main.con = con;
 	}
 
-	
+
 	
 	public static Stage getMainStage() {
 		return mainStage;

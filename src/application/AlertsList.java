@@ -13,13 +13,17 @@ public class AlertsList {
     @FXML private TableColumn<AlertRoom, Number> roomNbrColumn;
     @FXML private TableColumn<AlertRoom, String> descColumn;
     
-    private ObservableList<AlertRoom> alertRoomData = FXCollections.observableArrayList();
+    public static ObservableList<AlertRoom> alertRoomData = FXCollections.observableArrayList();
 	
-	public ObservableList<AlertRoom> getAlertRoomData() {
+	public static ObservableList<AlertRoom> getAlertRoomData() {
         return alertRoomData;
     }
-    
-	 @FXML
+
+	public static void setAlertRoomData(ObservableList<AlertRoom> alertRoomData) {
+		AlertsList.alertRoomData = alertRoomData;
+	}
+
+	@FXML
 	    private void initialize() {
 	    	System.out.println("init AlertsList");
 	    	// Add some sample data
@@ -27,6 +31,7 @@ public class AlertsList {
 	        alertRoomData.add(new AlertRoom(123, "High breathing rate"));
 	        // Add observable list data to the table
 	        alertRoomTable.setItems(this.getAlertRoomData());
+
 	        // Initialize the alertRoom table with the two columns.
 	        roomNbrColumn.setCellValueFactory(cellData -> cellData.getValue().roomNbrProperty());
 	        descColumn.setCellValueFactory(cellData -> cellData.getValue().descProperty());
