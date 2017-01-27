@@ -1,56 +1,4 @@
-/*
-package application;
 
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-
-
-public class LoginController {
-	
-		@FXML private TextField username;
-
-	    @FXML private PasswordField password;
-
-	    @FXML private Button submitButton;
-	  
-	    @FXML private Label statuslbl;
-	    
-	    private Main main;
-	    
-	    @FXML protected void handleSubmitButtonAction(ActionEvent event) {
-	        System.out.println("submit");
-	        System.out.println(username.getText() + "/" + password.getText());
-	        //temporary validation
-	        if(username.getText().equals("a") && password.getText().equals("a")) {
-	        	System.out.println("Login as Doctor");
-	        	Main.setUserClass(true);
-	        	Main.setCurrentUserName(username.getText());
-	        	main.initMainLayout();
-	        	//main.initUserInfo();
-	        	main.initDoctorControls();
-	        }
-	        
-	        if(username.getText().equals("b") && password.getText().equals("b")) {
-	        	System.out.println("Login as Staff");
-	        	Main.setUserClass(false);
-	        	Main.setCurrentUserName(username.getText());
-	        	main.initMainLayout();
-	        	//main.initUserInfo();
-	        	main.initStaffControls();
-	        }
-	        
-	        else {
-	        	
-	        	statuslbl.setText("Login failed");
-	        }
-	    }	
-    
-	*/    
-	    
 	    
 	    package application;
 
@@ -73,17 +21,17 @@ public class LoginController {
 
 
 	    public class LoginController implements Initializable {
-	    	
+
 	        private Main main;
 	        private Connection con;
 	    	
 	        int userId;
-	        
-	    	@FXML private TextField username;
+			public static ArrayList<Patient> initialValues = new ArrayList<>();
+			@FXML private TextField username;
 	    	@FXML private PasswordField password;
 	    	@FXML private Button submitButton;
 		    @FXML private Label statuslbl;
-	    	public static ArrayList<Patient> p;
+
 	    	@FXML protected void handleSubmitButtonAction(ActionEvent event) throws Exception {
 
 	    		ResultSet rs = null;
@@ -105,16 +53,19 @@ public class LoginController {
 	    			}
 	    			
 	    			if(count == 1) {
-	    				System.out.println("User Name & Password correct");	
-	    				System.out.println("Login as class " + Main.isUserClass() +  " with ID " + Main.getUserID());
-	    				Main.setCurrentUserName(username.getText());
-
-						p = PatientsList.getAllPatients();
-						AlertVitalSigns alerts = new AlertVitalSigns();
-						Thread t = new Thread(alerts);
-						t.start();
-	    				main.initMainLayout();
+	    				System.out.println("User Name & Password correct!");
+	    				String myClass;
 	    				
+	    				if(Main.isUserClass()) myClass = "Doctor";
+	    				else myClass = "Staff";
+	    				System.out.println("Login with userId -"+ Main.getUserID() +"- as " + myClass);
+	    				Main.setCurrentUserName(username.getText());
+	    					    					
+	    				main.initMainLayout();
+	    				initialValues.addAll(PatientsList.getStaticVitalList());
+						for (Patient p:initialValues) {
+							System.out.println(p.getFirstName()+"works!" + " " + p.getBody_temp() + p.getBlood_pressure() + p.getPulse_rate() + p.getBreathing_rate());
+						}
 	    			}
 			
 	    			else if(count > 1) {

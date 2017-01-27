@@ -45,9 +45,9 @@
             <Separator layoutX="125.0" layoutY="60.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
             <Button layoutX="845.0" layoutY="38.0" mnemonicParsing="false" onAction="#logout" prefHeight="65.0" prefWidth="64.0" text="Logout" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
             <ImageView fitHeight="75.0" fitWidth="625.0" layoutX="42.0" layoutY="-37.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="275.0" AnchorPane.topAnchor="0.0" />
-            <Label fx:id="clockLabel" layoutX="14.0" layoutY="29.0" prefHeight="31.0" prefWidth="256.0" text="Label">
+            <Label fx:id="clockLabel" layoutX="14.0" layoutY="13.0" prefHeight="55.0" prefWidth="523.0" text="Hospital Management System" textFill="#ae1717" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="13.0">
                <font>
-                  <Font size="26.0" />
+                  <Font size="38.0" />
                </font>
             </Label>
          </children></AnchorPane>

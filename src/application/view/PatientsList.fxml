@@ -66,7 +66,7 @@
                                     <Label fx:id="statusLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                                  </children>
                               </GridPane>
-                              <TextArea fx:id="problemLabel" layoutX="14.0" layoutY="240.0" prefHeight="66.0" prefWidth="304.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="75.0" />
+                              <TextArea fx:id="problemLabel" layoutX="14.0" layoutY="240.0" prefHeight="66.0" prefWidth="298.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="75.0" />
                               <Label layoutX="14.0" layoutY="223.0" text="Problem :" />
                               <Separator layoutX="58.0" layoutY="220.0" prefWidth="200.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                               <Label fx:id="roomLabel" layoutX="259.0" layoutY="76.0" prefHeight="81.0" prefWidth="87.0" text="4">
@@ -75,7 +75,7 @@
                                  </font>
                               </Label>
                               <Label layoutX="253.0" layoutY="46.0" text="Room:" />
-                              <Button fx:id="editProblemBtn" layoutX="322.0" layoutY="240.0" mnemonicParsing="false" onAction="#editProblem" prefHeight="66.0" prefWidth="66.0" text="edit.." AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="320.0" AnchorPane.rightAnchor="5.0" />
+                              <Button fx:id="editProblemBtn" layoutX="322.0" layoutY="240.0" mnemonicParsing="false" onAction="#editProblem" prefHeight="66.0" prefWidth="66.0" text="edit.." wrapText="true" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="320.0" AnchorPane.rightAnchor="5.0" />
                            </children>
                         </AnchorPane>
                       <AnchorPane fx:id="vitalSignPane" minHeight="0.0" minWidth="0.0" prefHeight="240.0" prefWidth="394.0">
@@ -85,10 +85,10 @@
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <GridPane layoutY="36.0" prefHeight="140.0" prefWidth="384.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="40.0">
+                              <GridPane layoutY="36.0" prefHeight="140.0" prefWidth="384.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="40.0">
                                 <columnConstraints>
                                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="30.0" />
                                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                 </columnConstraints>
                                 <rowConstraints>
@@ -99,25 +99,25 @@
                                   <RowConstraints minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
-                                    <Label text="Blood pressure" />
+                                    <Label prefHeight="17.0" prefWidth="144.0" text="Body Temperatur" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                                     <Label text="Rate of breathing" GridPane.columnIndex="2" />
                                     <Label text="Pulse rate" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                                    <Label fx:id="vital1lbl" text="100" textFill="#800707" GridPane.rowIndex="1">
+                                    <Label fx:id="vital1lbl" text="36.5 °C" textFill="#800707" GridPane.rowIndex="1">
                                        <font>
-                                          <Font name="System Bold" size="45.0" />
+                                          <Font name="System Bold" size="37.0" />
                                        </font></Label>
                                     <Label fx:id="vital2lbl" text="100" textFill="#800707" GridPane.columnIndex="2" GridPane.rowIndex="1">
                                        <font>
-                                          <Font name="System Bold" size="45.0" />
+                                          <Font name="System Bold" size="37.0" />
                                        </font></Label>
                                     <Label fx:id="vital3lbl" text="100" textFill="#800707" GridPane.columnIndex="2" GridPane.rowIndex="4">
                                        <font>
-                                          <Font name="System Bold" size="45.0" />
+                                          <Font name="System Bold" size="37.0" />
                                        </font></Label>
-                                    <Label text="Body temperature" GridPane.rowIndex="3" />
-                                    <Label fx:id="vital4lbl" text="100" textFill="#800707" GridPane.rowIndex="4">
+                                    <Label text="Blood Pressure" GridPane.rowIndex="3" />
+                                    <Label fx:id="vital4lbl" prefHeight="54.0" prefWidth="149.0" text="80/120" textFill="#800707" GridPane.rowIndex="4">
                                        <font>
-                                          <Font name="System Bold" size="45.0" />
+                                          <Font name="System Bold" size="37.0" />
                                        </font></Label>
                                  </children>
                               </GridPane>
@@ -129,5 +129,6 @@
             </AnchorPane>
         </items>
       </SplitPane>
+      <Button layoutX="717.0" layoutY="561.0" mnemonicParsing="false" onAction="#refreshPatientData" prefHeight="25.0" prefWidth="69.0" text="refresh..." />
    </children>
 </AnchorPane>

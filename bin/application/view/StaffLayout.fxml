@@ -4,13 +4,27 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="500.0" prefWidth="100.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.StaffController">
    <children>
       <VBox alignment="CENTER" layoutX="25.0" layoutY="150.0" prefHeight="200.0" prefWidth="100.0" spacing="5.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
          <children>
-            <Button maxHeight="500.0" mnemonicParsing="false" onAction="#handleBtn1" prefHeight="200.0" prefWidth="80.0" text="My Rooms" textAlignment="CENTER" wrapText="true" />
-            <Button maxHeight="500.0" mnemonicParsing="false" onAction="#handleBtn2" prefHeight="200.0" prefWidth="80.0" text="Patient Database" textAlignment="CENTER" wrapText="true" />
+            <Button maxHeight="500.0" mnemonicParsing="false" onAction="#handleBtn1" prefHeight="200.0" prefWidth="80.0" text="My Rooms" textAlignment="CENTER" textFill="#930000" wrapText="true">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
+
+            <Button maxHeight="500.0" mnemonicParsing="false" onAction="#handleBtn2" prefHeight="200.0" prefWidth="80.0" text="Patient Database" textAlignment="CENTER" textFill="#930000" wrapText="true">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
+            
+            <Button maxHeight="500.0" mnemonicParsing="false" onAction="#handleBtn3" prefHeight="200.0" prefWidth="80.0" text="Alerts" textAlignment="CENTER" textFill="#930000" wrapText="true">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
+            
          </children>
       </VBox>
       <Separator layoutX="92.0" layoutY="137.0" orientation="VERTICAL" prefHeight="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />

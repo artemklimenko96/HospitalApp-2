@@ -1,7 +1,9 @@
 package application.model;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -18,10 +20,12 @@ public class Patient {
     private final IntegerProperty room;
     private final StringProperty assignedDoctor;
     private final IntegerProperty doctorID;
-    private final IntegerProperty vital1;
-    private final IntegerProperty vital2;
-    private final IntegerProperty vital3;
-    private final IntegerProperty vital4;
+       
+    private final DoubleProperty body_temp;
+    private final IntegerProperty breathing_rate;
+    private final IntegerProperty pulse_rate;
+    private final StringProperty blood_pressure;
+
     private final StringProperty inDate;
 
     
@@ -41,10 +45,10 @@ public class Patient {
        // this.vitalSignId = new SimpleIntegerProperty(0);
         this.assignedDoctor = new SimpleStringProperty("");
         this.inDate = new SimpleStringProperty("");
-        this.vital1 = new SimpleIntegerProperty(0);
-        this.vital2 = new SimpleIntegerProperty(0);
-        this.vital3 = new SimpleIntegerProperty(0);
-        this.vital4 = new SimpleIntegerProperty(0);
+        this.breathing_rate = new SimpleIntegerProperty(0);
+        this.pulse_rate = new SimpleIntegerProperty(0);
+        this.body_temp = new SimpleDoubleProperty(0);
+        this.blood_pressure = new SimpleStringProperty("");
         this.doctorID = new SimpleIntegerProperty(0);
     }
 
@@ -59,10 +63,10 @@ public class Patient {
         this.problem = new SimpleStringProperty("bla bla bla");
         this.status = new SimpleBooleanProperty(true);
         this.inDate = new SimpleStringProperty("01.01.2000");
-        this.vital1 = new SimpleIntegerProperty(0);
-        this.vital2 = new SimpleIntegerProperty(0);
-        this.vital3 = new SimpleIntegerProperty(0);
-        this.vital4 = new SimpleIntegerProperty(0);    
+        this.breathing_rate = new SimpleIntegerProperty(0);
+        this.pulse_rate = new SimpleIntegerProperty(0);
+        this.body_temp = new SimpleDoubleProperty(0);
+        this.blood_pressure = new SimpleStringProperty("");   
         this.doctorID = new SimpleIntegerProperty(0);
     }
     
@@ -192,56 +196,60 @@ public class Patient {
         return id;
     }
     
-
+    /* Vitals */
     
-    public Integer getVital1() {
-		return vital1.get();
+    public Double getBody_temp() {
+		return body_temp.get();
 	}
 	
-	public void setVital1(Integer vital1) {
-        this.vital1.set(vital1);
+	public void setBody_temp(Double body_temp) {
+        this.body_temp.set(body_temp);
     }
 
-    public IntegerProperty vital1Property() {
-        return vital1;
+    public DoubleProperty body_tempProperty() {
+        return body_temp;
     }
     
-    public Integer getVital2() {
-		return vital2.get();
+    
+    public Integer getBreathing_rate() {
+		return breathing_rate.get();
 	}
 	
-	public void setVital2(Integer vital2) {
-        this.vital2.set(vital2);
+	public void setBreathing_rate(Integer breathing_rate) {
+        this.breathing_rate.set(breathing_rate);
     }
 
-    public IntegerProperty vital2Property() {
-        return vital2;
+    public IntegerProperty breathing_rateProperty() {
+        return breathing_rate;
     }
     
-    public Integer getVital3() {
-		return vital3.get();
+    
+    public Integer getPulse_rate() {
+		return pulse_rate.get();
 	}
 	
-	public void setVital3(Integer vital3) {
-        this.vital3.set(vital3);
+	public void setPulse_rate(Integer pulse_rate) {
+        this.pulse_rate.set(pulse_rate);
     }
 
-    public IntegerProperty vital3Property() {
-        return vital3;
+    public IntegerProperty pulse_rateProperty() {
+        return pulse_rate;
     }
     
-    public Integer getVital4() {
-		return vital4.get();
-	}
-	
-	public void setVital4(Integer vital4) {
-        this.vital4.set(vital4);
+    
+    public String getBlood_pressure() {
+        return blood_pressure.get();
     }
 
-    public IntegerProperty vital4Property() {
-        return vital4;
+    public void setBlood_pressure(String blood_pressure) {
+        this.blood_pressure.set(blood_pressure);
     }
-    
+
+    public StringProperty blood_pressureProperty() {
+        return inDate;
+    }
+
+     
     public Integer getDoctorID() {
 		return doctorID.get();
 	}

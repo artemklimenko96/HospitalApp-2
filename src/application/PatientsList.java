@@ -1,11 +1,11 @@
 package application;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ListIterator;
-
 import application.model.Patient;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,6 +15,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
+
 
 public class PatientsList {
 	
@@ -33,20 +34,15 @@ public class PatientsList {
     @FXML private Label vital3lbl;
     @FXML private Label vital4lbl; 
     @FXML private AnchorPane vitalSignPane;
-   public static PatientsList p = new PatientsList();
+    
     Connection con;
-  
+  	public static ArrayList<Patient> staticVitalList = new ArrayList();
     private ObservableList<Patient> patientData = FXCollections.observableArrayList();
-
-
-
-	//array for storing the patients with initial vital signs
-	public static ArrayList<Patient> allPatients = new ArrayList<>();
+	
 	public ObservableList<Patient> getPatientData() {
         return patientData;
     }
-    
-	
+    	
 	public void refreshVitals() {
 				
 		ListIterator<Patient> iterator = patientData.listIterator();
@@ -58,49 +54,81 @@ public class PatientsList {
 			
 			if(tempPatient.getStatus()) {			
 				int temp_room_id = tempPatient.getRoom();
-				String query = "SELECT vital1, vital2, vital3, vital4 FROM rooms WHERE ID = '"+temp_room_id+"'";    				
+				String query = "SELECT body_temp, breathing_rate, pulse_rate, blood_pressure FROM rooms WHERE ID = '"+temp_room_id+"'";    				
 				ResultSet rs;
+				
 				
 				System.out.println("refreshVital of patient in room " + temp_room_id );
 				try {
 					rs = con.createStatement().executeQuery(query);
 					rs.first();   				  		
-					tempPatient.setVital1(rs.getInt("vital1"));
-					tempPatient.setVital2(rs.getInt("vital2"));
-					tempPatient.setVital3(rs.getInt("vital3"));
-					tempPatient.setVital4(rs.getInt("vital4"));
-					//adding a patient with vital signs to the array
-					allPatients.add(tempPatient);
+					tempPatient.setBody_temp(rs.getDouble("body_temp"));
+					tempPatient.setBreathing_rate(rs.getInt("breathing_rate"));
+					tempPatient.setPulse_rate(rs.getInt("pulse_rate"));
+					tempPatient.setBlood_pressure(rs.getString("blood_pressure"));
 				} catch (SQLException e) {
-					System.out.println("Loading Vital failed!");
+					System.out.println("Loading Vitals failed!");
 					e.printStackTrace();
 				}
-			}
-			else {	
 			}
 		}
 	}
     
-	// to do ---------------------------------------------------------
-	
    	@FXML private void editProblem() {
         Patient selectedPatient = patientTable.getSelectionModel().getSelectedItem();
         
         if (selectedPatient != null) {
            	System.out.println("edit");
+           	String newProblem = problemLabel.getText();
+           	int patient_id = selectedPatient.getId();
+      	
+           	System.out.println("Change med_history of Patient " + patient_id + " to "+ newProblem);
+           	String query = "UPDATE patient SET medical_history = '"+newProblem+"' WHERE id = '"+patient_id+"'";
 
+           	try{
+                PreparedStatement pst = con.prepareStatement(query);
+                pst.execute();
+           		
+    		}catch (SQLException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}        	
+           	refreshTable();
+           	refreshVitals();
         }
-        
+ 
         else {
         	System.out.println("nothing selected");
         }
     }
 
+   	@FXML private void refreshPatientData() {
+   		System.out.println("Refresh PatientData");
+       	refreshTable();
+       	refreshVitals();
+   	}
+   	
 	public void refreshTable() {
 		
 		patientData.clear();
 		
+		/*
+		try {
+			System.out.println("Get Patient Data for Doctor with ID: " + Main.getClassID());
+			con = Main.getCon();
+			patientData = DBConnector.getPatientDataDoctorUser(con, Main.getClassID());
+			patientData = DBConnector.getVitals(patientData, con);
+			con.close();
+			
+		} catch (Exception e1) {
+			System.out.println("failed refreshing table");
+			e1.printStackTrace();
+		}
+		 */
+		//getPatientDataDoctorUser*/
+
 		int temp_id = Main.getClassID();
+		System.out.println("Get table for Doctor with ID: " + temp_id);
 		
 		try {
 	    	con = Main.getCon();
@@ -118,39 +146,33 @@ public class PatientsList {
 	    		  tempPatient.setInDate(rs.getString("in_date"));
 	    		  tempPatient.setProblem(rs.getString("medical_history"));
 	    		  tempPatient.setId(rs.getInt("id"));	    		  
-	    		  patientData.add(tempPatient);	    		  
+	    		  patientData.add(tempPatient);
+				  staticVitalList.add(tempPatient);
 	    	  }
 	    	    	  
 		}catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+	}
+public void setTable(){
 		patientTable.setItems(this.getPatientData());
 		firstNameColumn.setCellValueFactory(cellData -> cellData.getValue().firstNameProperty());
 		lastNameColumn.setCellValueFactory(cellData -> cellData.getValue().lastNameProperty());
 		showPatientDetails(null);
-	}
-	
-	
+}
+
 		
     @FXML
     private void initialize() {
     	refreshTable();
     	refreshVitals();
-		System.out.println("init PatientsList");
+		setTable();
+    	System.out.println("init PatientsList");
         showPatientDetails(null);
         patientTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> showPatientDetails(newValue));
     }
-	public static ArrayList<Patient> getAllPatients() {
-
-		p.initialize();
-		return allPatients;
-	}
-
-	public static void setAllPatients(ArrayList<Patient> allPatients) {
-		PatientsList.allPatients = allPatients;
-	}
+    
     private void showPatientDetails(Patient patient) {
     	if(patient != null) {
     		firstNameLabel.setText(patient.getFirstName());
@@ -159,13 +181,12 @@ public class PatientsList {
     		String formattedDate = patient.getBirthday().toString();
     		birthdayLabel.setText(formattedDate);
     		String status;
+    		
     		if (patient.getStatus()) {
     			status = "Inpatient";
-    		//	vitalSignPane.setVisible(true);
     		}
     		else {
     			status = "Outpatient";
-    			//vitalSignPane.setVisible(false);
     		}
     		
     		statusLabel.setText(status);
@@ -176,12 +197,12 @@ public class PatientsList {
     		problemLabel.setText(patient.getProblem());
     		
     		if (patient.getStatus() == true) {
-    		vital1lbl.setText(patient.getVital1().toString());
-    		vital2lbl.setText(patient.getVital2().toString());
-    		vital3lbl.setText(patient.getVital3().toString());
-    		vital4lbl.setText(patient.getVital4().toString());
+    		vital1lbl.setText(patient.getBody_temp().toString() + "C");
+    		vital2lbl.setText(patient.getBreathing_rate().toString());
+    		vital3lbl.setText(patient.getPulse_rate().toString());
+    		vital4lbl.setText(patient.getBlood_pressure());
     		}
-    		
+    		   		
     		else {
         		vital1lbl.setText("-");
         		vital2lbl.setText("-");
@@ -203,4 +224,10 @@ public class PatientsList {
     		vital4lbl.setText("");
     	}
     }
+
+	public static ArrayList<Patient> getStaticVitalList() {
+
+		return staticVitalList;
+
+	}
 }

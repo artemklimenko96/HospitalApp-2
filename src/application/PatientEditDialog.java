@@ -184,9 +184,7 @@ public class PatientEditDialog {
             birthdayField.setText("");         
             birthdayField.setPromptText("YYYY-MM-DD");
             roomLabel.setText("");
-            doctorLabel.setText("");
-            // roomField.setText("");
-           // doctorField.setText("");        	
+            doctorLabel.setText("");  	
     	}
         
     	else {

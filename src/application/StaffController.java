@@ -26,4 +26,11 @@ public class StaffController {
 	      currentScreen = "allpatients";
     }
 	
+	@FXML
+    private void handleBtn3() {
+		if(currentScreen.equals("alertsroom")) return;
+       Main.showAlertsList();
+       currentScreen = "alertsroom";
+    }
+	
 }

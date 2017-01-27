@@ -252,7 +252,10 @@ public class PatientDataController {
             try {
               	//con = Main.getCon();
               	
-              	query = "INSERT INTO patient (fname, lastname, gender, date_of_birth, patient_status, room_id, in_date, medical_history, assigned_doctor)" + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+              	query = "INSERT INTO patient"
+              			+ "(fname, lastname, gender, date_of_birth, patient_status, room_id, in_date, medical_history, assigned_doctor)" 
+              			+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+              	         	
               	PreparedStatement preparedStmt = con.prepareStatement(query);
 				preparedStmt.setString(1, tempPatient.getFirstName());
 				preparedStmt.setString(2, tempPatient.getLastName());
@@ -272,8 +275,7 @@ public class PatientDataController {
 				
 				preparedStmt.setString(7, in_date);
 				preparedStmt.setString(8, tempPatient.getProblem());
-				preparedStmt.setInt(9, tempDocInt);
-				
+				preparedStmt.setInt(9, tempDocInt);				
 				preparedStmt.execute();
 				
 			} catch (SQLException e) {
@@ -305,7 +307,10 @@ public class PatientDataController {
             refreshTable();
         }
     }
-      
+     
+    
+    
+    
     @FXML private void handleEditPatient() {
         Patient selectedPatient = patientTable.getSelectionModel().getSelectedItem();
         if (selectedPatient != null) {
@@ -359,9 +364,7 @@ public class PatientDataController {
     					e.printStackTrace();
     				}
     				
-                
-       
-                
+             
                 if(patient_status == true) {
                 	pat_status = 1;
                 }
@@ -385,6 +388,7 @@ public class PatientDataController {
                     		+ " patient_status = '"+pat_status+"',"
                     		+ " room_id = '"+room_id+"' ,"
                     		+ " medical_history= '"+medical_history+"'"
+                    		//+ " assigned_doctor = '"+assigned_doctor+"'"
                     		+ " WHERE id  ='" + patientID + "'";
                     		
                     PreparedStatement pst = con.prepareStatement(query);
@@ -396,8 +400,8 @@ public class PatientDataController {
     			}
                   
                 
-              //update values in roomTable
-                
+                //update values in roomTable
+               // TO DO verlgeich altraum mit neu wenn != edit
              
                 if(patient_status == false) {
                 	query = "UPDATE rooms SET room_status = 0  WHERE id ='" + old_room_id + "'";
@@ -418,9 +422,7 @@ public class PatientDataController {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-
-                        
-                refreshTable();              
+				refreshTable();              
             }
 
         } else {

@@ -36,7 +36,7 @@ public class MainController {
 						int second = cal.get(Calendar.SECOND);
 						System.out.println(mFormat.format(Double.valueOf(hour))+":"+mFormat.format(Double.valueOf(minute))+":"+mFormat.format(Double.valueOf(second)));						
 						//clockLabel.setText(mFormat.format(Double.valueOf(hour))+":"+mFormat.format(Double.valueOf(minute))+":"+mFormat.format(Double.valueOf(second)));					
-						sleep(1000);
+						sleep(1000);		
 					}
 				}
 			} catch(InterruptedException e) {
@@ -57,7 +57,7 @@ public class MainController {
 		int hour = cal.get(Calendar.HOUR_OF_DAY);
 		int minute = cal.get(Calendar.MINUTE);
 		timeLabel.setText("Login at: " +mFormat.format(Double.valueOf(hour))+":"+mFormat.format(Double.valueOf(minute)));
-		//refreshThread.start();
+	//	refreshThread.start();
 	}
 	
 	@FXML public void logout(ActionEvent e) {
