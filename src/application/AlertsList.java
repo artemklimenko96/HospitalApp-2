@@ -13,7 +13,7 @@ public class AlertsList {
     @FXML private TableColumn<AlertRoom, Number> roomNbrColumn;
     @FXML private TableColumn<AlertRoom, String> descColumn;
     
-    private ObservableList<AlertRoom> alertRoomData = FXCollections.observableArrayList();
+    private static ObservableList<AlertRoom> alertRoomData = FXCollections.observableArrayList();
 	
 	public ObservableList<AlertRoom> getAlertRoomData() {
         return alertRoomData;
@@ -23,8 +23,7 @@ public class AlertsList {
 	    private void initialize() {
 	    	System.out.println("init AlertsList");
 	    	// Add some sample data
-	        alertRoomData.add(new AlertRoom(12, "Low blood pressure"));
-	        alertRoomData.add(new AlertRoom(123, "High breathing rate"));
+
 	        // Add observable list data to the table
 	        alertRoomTable.setItems(this.getAlertRoomData());
 	        // Initialize the alertRoom table with the two columns.

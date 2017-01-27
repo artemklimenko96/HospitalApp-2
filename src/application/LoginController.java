@@ -17,16 +17,16 @@
 	    import javafx.scene.control.Label;
 	    import javafx.scene.control.PasswordField;
 	    import javafx.scene.control.TextField;
-	    import application.Main;
 
 
-	    public class LoginController implements Initializable {
+		public class LoginController implements Initializable {
 
 	        private Main main;
 	        private Connection con;
 	    	
 	        int userId;
 			public static ArrayList<Patient> initialValues = new ArrayList<>();
+			public static ArrayList<Patient> changableValues = new ArrayList<>();
 			@FXML private TextField username;
 	    	@FXML private PasswordField password;
 	    	@FXML private Button submitButton;
@@ -66,6 +66,11 @@
 						for (Patient p:initialValues) {
 							System.out.println(p.getFirstName()+"works!" + " " + p.getBody_temp() + p.getBlood_pressure() + p.getPulse_rate() + p.getBreathing_rate());
 						}
+						changableValues = initialValues;
+						Thread change = new Thread(new ChangeValuesThread());
+						change.start();
+						Thread check = new Thread(new CompareValuesThread());
+						check.start();
 	    			}
 			
 	    			else if(count > 1) {
@@ -89,7 +94,6 @@
 	    	        this.main = main;
 	    	        con = Main.getCon();
 	    	    }
-
 	    	    
 	    		@Override
 	    		public void initialize(URL arg0, ResourceBundle arg1) {
