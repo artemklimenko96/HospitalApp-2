@@ -49,7 +49,7 @@ public class CompareValuesThread implements Runnable {
                     changeOccured = true;
                     double d = Math.round(p.getBody_temp() * 10);
                     double f = d/10;
-                    System.out.println(f);
+                    
                     data.append("Temperature" + " " + f + " ");
 
                 }
