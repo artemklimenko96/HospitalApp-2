@@ -27,6 +27,7 @@
 	        int userId;
 			public static ArrayList<Patient> initialValues = new ArrayList<>();
 			public static ArrayList<Patient> changableValues = new ArrayList<>();
+			public static ArrayList<Patient> roomList = new ArrayList<>();
 			@FXML private TextField username;
 	    	@FXML private PasswordField password;
 	    	@FXML private Button submitButton;
@@ -62,10 +63,9 @@
 	    				Main.setCurrentUserName(username.getText());
 	    					    					
 	    				main.initMainLayout();
-	    				initialValues.addAll(PatientsList.getStaticVitalList());
-						for (Patient p:initialValues) {
-							System.out.println(p.getFirstName()+"works!" + " " + p.getBody_temp() + p.getBlood_pressure() + p.getPulse_rate() + p.getBreathing_rate());
-						}
+
+						initialValues.addAll(PatientsList.getStaticVitalList());
+						roomList.addAll(RoomListController.getStaticRoomList());
 						changableValues = initialValues;
 						Thread change = new Thread(new ChangeValuesThread());
 						change.start();

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.ListIterator;
 import application.model.Patient;
 import javafx.collections.FXCollections;
@@ -34,8 +35,8 @@ public class RoomListController {
 
     Connection con = Main.getCon();
     
-    private ObservableList<Patient> roomData = FXCollections.observableArrayList();
-	
+    public static ObservableList<Patient> roomData = FXCollections.observableArrayList();
+	public static ArrayList<Patient> staticRoomList = new ArrayList();
 	public ObservableList<Patient> getRoomData() {
         return roomData;
     }
@@ -100,6 +101,7 @@ public class RoomListController {
 	    		//  System.out.println("patient mit dr: " + tempDoc_id);
 	    		  tempPatient.setDoctorID(rs.getInt("assigned_doctor"));
 	    		  roomData.add(tempPatient);
+					staticRoomList.add(tempPatient);
 	    	  }
 			}
 		
@@ -200,7 +202,7 @@ public class RoomListController {
     		problemLabel.setText(patient.getProblem());
     		
     		if (patient.getStatus() == true) {
-    		vital1lbl.setText(patient.getBody_temp().toString() + "°C");
+    		vital1lbl.setText(patient.getBody_temp().toString() + "ï¿½C");
     		vital2lbl.setText(patient.getBreathing_rate().toString());
     		vital3lbl.setText(patient.getPulse_rate().toString());
     		vital4lbl.setText(patient.getBlood_pressure());
@@ -227,5 +229,8 @@ public class RoomListController {
     		vital4lbl.setText("");
     	}
     }
-         
+
+	public static ArrayList<Patient> getStaticRoomList() {
+		return staticRoomList;
+	}
 }

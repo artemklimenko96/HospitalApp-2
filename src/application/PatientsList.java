@@ -226,8 +226,8 @@ public void setTable(){
     }
 
 	public static ArrayList<Patient> getStaticVitalList() {
-
 		return staticVitalList;
-
 	}
+
+
 }
