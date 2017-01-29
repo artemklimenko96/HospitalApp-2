@@ -23,7 +23,6 @@ public class AlertsList {
 	    private void initialize() {
 	    	System.out.println("init AlertsList");
 	    	// Add some sample data
-			alertRoomData.add(new AlertRoom(25,"fresh"));
 	        // Add observable list data to the table
 	        alertRoomTable.setItems(this.getAlertRoomData());
 	        // Initialize the alertRoom table with the two columns.

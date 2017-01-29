@@ -15,6 +15,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 
 
 public class PatientsList {
@@ -26,23 +27,82 @@ public class PatientsList {
     @FXML private Label lastNameLabel;
     @FXML private Label genderLabel;
     @FXML private Label birthdayLabel;
-    @FXML private Label statusLabel;
     @FXML private Label roomLabel;
     @FXML private TextArea problemLabel;
     @FXML private Label vital1lbl;
     @FXML private Label vital2lbl;
     @FXML private Label vital3lbl;
     @FXML private Label vital4lbl; 
+    @FXML private GridPane vitalGrid;
+    @FXML private GridPane roomGrid; 
     @FXML private AnchorPane vitalSignPane;
     
     Connection con;
-  	public static ArrayList<Patient> staticVitalList = new ArrayList();
+	public static ArrayList<Patient> staticVitalList = new ArrayList();
+    Patient tempSelectPatient;
+
     private ObservableList<Patient> patientData = FXCollections.observableArrayList();
 	
 	public ObservableList<Patient> getPatientData() {
         return patientData;
     }
+
+	@FXML private void editProblem() {
+        Patient selectedPatient = patientTable.getSelectionModel().getSelectedItem();
+        
+        if (selectedPatient != null) {
+           	String newProblem = problemLabel.getText();
+           	int patient_id = selectedPatient.getId();
+           	tempSelectPatient.setProblem(newProblem);
+      	
+           	System.out.println("Change med_history of Patient " + patient_id + " to "+ newProblem);
+           	String query = "UPDATE patient SET medical_history = '"+newProblem+"' WHERE id = '"+patient_id+"'";
+
+           	try{
+                PreparedStatement pst = con.prepareStatement(query);
+                pst.execute();
+           		
+    		}catch (SQLException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}        	
+        }
+ 
+        else {
+        	System.out.println("nothing selected");
+        }
+    }
+
+   	@FXML private void refreshPatientData() {
+   		System.out.println("Refresh PatientData");
+       	refreshTable();
+       	refreshVitals();
+       	showPatientDetails(tempSelectPatient);
+   	}
+	
+    @FXML private void initialize() {
+    	vitalGrid.setStyle("-fx-padding: 10;" + 
+                "-fx-background-insets: 0.0 5.0 0.0 5.0;" +
+                "-fx-background-color: lightgrey;");
+
     	
+   	roomGrid.setStyle("-fx-padding: 10;" + 
+                 "-fx-border-style: solid inside;" + 
+                 "-fx-border-width: 2;" +
+                 "-fx-border-insets: 5;" + 
+                 "-fx-border-color: black;" +
+                 "-fx-border-radius: 5;");
+
+    	
+    	refreshTable();
+    	refreshVitals();
+    	System.out.println("init PatientsList");
+    	ListIterator<Patient> iterator = patientData.listIterator();
+    	Patient tempPatient = iterator.next();
+    	showPatientDetails(tempPatient);
+        patientTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> showPatientDetails(newValue));
+    }
+   	
 	public void refreshVitals() {
 				
 		ListIterator<Patient> iterator = patientData.listIterator();
@@ -56,8 +116,7 @@ public class PatientsList {
 				int temp_room_id = tempPatient.getRoom();
 				String query = "SELECT body_temp, breathing_rate, pulse_rate, blood_pressure FROM rooms WHERE ID = '"+temp_room_id+"'";    				
 				ResultSet rs;
-				
-				
+			
 				System.out.println("refreshVital of patient in room " + temp_room_id );
 				try {
 					rs = con.createStatement().executeQuery(query);
@@ -73,42 +132,9 @@ public class PatientsList {
 			}
 		}
 	}
-    
-   	@FXML private void editProblem() {
-        Patient selectedPatient = patientTable.getSelectionModel().getSelectedItem();
-        
-        if (selectedPatient != null) {
-           	System.out.println("edit");
-           	String newProblem = problemLabel.getText();
-           	int patient_id = selectedPatient.getId();
-      	
-           	System.out.println("Change med_history of Patient " + patient_id + " to "+ newProblem);
-           	String query = "UPDATE patient SET medical_history = '"+newProblem+"' WHERE id = '"+patient_id+"'";
-
-           	try{
-                PreparedStatement pst = con.prepareStatement(query);
-                pst.execute();
-           		
-    		}catch (SQLException e) {
-    			// TODO Auto-generated catch block
-    			e.printStackTrace();
-    		}        	
-           	refreshTable();
-           	refreshVitals();
-        }
- 
-        else {
-        	System.out.println("nothing selected");
-        }
-    }
-
-   	@FXML private void refreshPatientData() {
-   		System.out.println("Refresh PatientData");
-       	refreshTable();
-       	refreshVitals();
-   	}
-   	
+     	
 	public void refreshTable() {
+			
 		
 		patientData.clear();
 		
@@ -151,53 +177,46 @@ public class PatientsList {
 	    	  }
 	    	    	  
 		}catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-public void setTable(){
+
 		patientTable.setItems(this.getPatientData());
 		firstNameColumn.setCellValueFactory(cellData -> cellData.getValue().firstNameProperty());
 		lastNameColumn.setCellValueFactory(cellData -> cellData.getValue().lastNameProperty());
 		showPatientDetails(null);
-}
-
+	}
 		
-    @FXML
-    private void initialize() {
-    	refreshTable();
-    	refreshVitals();
-		setTable();
-    	System.out.println("init PatientsList");
-        showPatientDetails(null);
-        patientTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> showPatientDetails(newValue));
-    }
     
     private void showPatientDetails(Patient patient) {
     	if(patient != null) {
+    		tempSelectPatient = patient;
+    		System.out.println("TEMP PATIENT: " + tempSelectPatient.getLastName() + ", " + tempSelectPatient.getFirstName());
     		firstNameLabel.setText(patient.getFirstName());
     		lastNameLabel.setText(patient.getLastName());
     		genderLabel.setText(patient.getGender());
     		String formattedDate = patient.getBirthday().toString();
     		birthdayLabel.setText(formattedDate);
-    		String status;
-    		
-    		if (patient.getStatus()) {
-    			status = "Inpatient";
-    		}
-    		else {
-    			status = "Outpatient";
-    		}
-    		
-    		statusLabel.setText(status);
+      		
     		String room;
-    		if (patient.getRoom() != null) room = patient.getRoom().toString();
-    		else room = "None";
+    		if (patient.getStatus()) {		
+    			if (patient.getRoom() != null && patient.getRoom() != 0) {
+    				roomGrid.setStyle( "-fx-border-color: black;"); 
+    				room = patient.getRoom().toString();
+    			}
+        		else room = "";
+    		}
+    		
+    		else {
+    			room = "";
+					roomGrid.setStyle( "-fx-border-color: lightgrey;"); 
+
+    		}
+    		
     		roomLabel.setText(room);
     		problemLabel.setText(patient.getProblem());
     		
     		if (patient.getStatus() == true) {
-    		vital1lbl.setText(patient.getBody_temp().toString() + "C");
+    		vital1lbl.setText(patient.getBody_temp().toString() + "�C");
     		vital2lbl.setText(patient.getBreathing_rate().toString());
     		vital3lbl.setText(patient.getPulse_rate().toString());
     		vital4lbl.setText(patient.getBlood_pressure());
@@ -215,7 +234,6 @@ public void setTable(){
     		lastNameLabel.setText("");
     		genderLabel.setText("");
     		birthdayLabel.setText("");
-    		statusLabel.setText("");
     		roomLabel.setText("");
     		problemLabel.setText("");
     		vital1lbl.setText("");
@@ -228,6 +246,6 @@ public void setTable(){
 	public static ArrayList<Patient> getStaticVitalList() {
 		return staticVitalList;
 	}
-
-
 }
+
+

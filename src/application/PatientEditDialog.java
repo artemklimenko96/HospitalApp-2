@@ -145,14 +145,11 @@ public class PatientEditDialog {
     /* Get selected values of comboBars */
     
     @FXML protected void getDoc(ActionEvent e) {
-   // 	doctorField.setText(doctorCombo.getValue());
     	doctorLabel.setText(doctorCombo.getValue());
     }
          
     @FXML protected void getRoom(ActionEvent e) {
-    //	roomField.setText(roomCombo.getValue());
     	roomLabel.setText(roomCombo.getValue());
-    //	roomCombo.setPromptText("Room:");
     }
 
     
@@ -257,14 +254,9 @@ public class PatientEditDialog {
            int day = cal.get(Calendar.DAY_OF_MONTH);
            String inDate = mFormat.format(Double.valueOf(year))+"."+mFormat.format(Double.valueOf(month+1))+"."+mFormat.format(Double.valueOf(day));
            patient.setInDate(inDate);            
-             
-      //     @FXML private Label roomLabel;
-       //    @FXML private Label doctorLabel;
-           
-           
+                        
            patient.setAssignedDoctor(doctorLabel.getText());
-           
-                  
+                            
 		 okClicked = true;
 		 dialogStage.close();
         }
@@ -288,12 +280,11 @@ public class PatientEditDialog {
         if (birthdayField.getText() == null || birthdayField.getText().length() == 0) {
             errorMessage += "No valid last Birthday!\n"; 
         }      
-        
-        /*
-        if (doctorField.getText() == null || doctorField.getText().length() == 0) {
+               
+        if (doctorLabel.getText() == null || doctorLabel.getText().length() == 0) {
             errorMessage += "No valid Doctor!\n"; 
         }
-        */
+        
         if(patientMode == true) {
         
         	if (roomLabel.getText() == null || roomLabel.getText().length() == 0) {
@@ -305,10 +296,6 @@ public class PatientEditDialog {
         	errorMessage += "No valid Gender!\n"; 
         }
         
-        if (problemField.getText() == null || problemField.getText().length() == 0) {
-            errorMessage += "No valid problem!\n"; 
-        }
-
         
         if (errorMessage.length() == 0) {
             System.out.println("A");
